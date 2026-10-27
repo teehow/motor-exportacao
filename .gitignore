@@ -1,0 +1,48 @@
+# Allowlist: this workspace also contains private migration diagnostics.
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/LEIA-ME.md
+!/requirements.txt
+!/empacotar.py
+!/verificar_ambiente.py
+!/Abrir Painel Migracao.cmd
+!/Executar Migracao.cmd
+!/Iniciar Painel Migracao.ps1
+!/Instalar.cmd
+!/Verificar Ambiente.cmd
+!/motor/
+!/painel_migracao/
+!/dados/
+!/.github/
+
+/motor/*
+!/motor/*.py
+/painel_migracao/*
+!/painel_migracao/app.py
+!/painel_migracao/core.py
+!/painel_migracao/README.md
+!/painel_migracao/tests/
+/painel_migracao/tests/*
+!/painel_migracao/tests/test_*.py
+!/painel_migracao/tests/fixtures/
+/painel_migracao/tests/fixtures/*
+!/painel_migracao/tests/fixtures/fake_export.py
+/dados/*
+!/dados/LEIA-ME.md
+!/dados/exemplos/
+/dados/exemplos/*
+!/dados/exemplos/*.csv
+/.github/*
+!/.github/workflows/
+/.github/workflows/*
+!/.github/workflows/validar.yml
+
+**/__pycache__/
+**/*.py[cod]
+**/.env
+**/.env.*
+**/*.log
+**/*.parquet
+**/*.bak
