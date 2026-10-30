@@ -98,8 +98,31 @@ class ExportDateTests(unittest.TestCase):
             results.append(table['analise_data_analise'][0].as_py())
             self.assertEqual(table['competencia_data'][0].as_py(), date(2026, 10, 30))
             if 'documento_data_validade' in table.column_names:
-                self.assertEqual(table['documento_data_validade'][0].as_py(), datetime(2026, 10, 30, 0, 30))
+                self.assertEqual(table['documento_data_validade'][0].as_py(), datetime(2026, 10, 29, 0, 30))
         self.assertEqual(results, [datetime(2026, 10, 29, 21, 30)] * 2)
+
+    def test_analysis_validity_minus_one_day_preserves_nulls_and_time(self):
+        module = module_from(ROOT / 'motor', 'exportar_analises.py')
+        schema = module.build_parquet_schema(pa)
+        validity = [datetime(2026, 1, 1, 12, 34, 56, 123456), None, datetime(2024, 3, 1), datetime(2026, 10, 30)]
+        values = {field.name: [None] * len(validity) for field in schema}
+        values.update(competencia_data=[date(2026, 10, 30)] * len(validity),
+                      documento_data_validade=validity,
+                      documento_data_emissao=validity,
+                      analise_data_analise=[datetime(2026, 10, 30, 12)] * len(validity))
+        frame = pd.DataFrame(values)
+        normalized = module.normalize_batch(frame)
+        table = adjust_export_datetimes(pa.Table.from_pandas(normalized, schema=schema, preserve_index=False))
+        with tempfile.TemporaryDirectory(dir=ROOT) as folder:
+            out = Path(folder) / 'analises.parquet'
+            pq.write_table(table, out)
+            result = pq.read_table(out)
+        self.assertEqual(result['documento_data_validade'].to_pylist(), [
+            datetime(2025, 12, 31, 12, 34, 56, 123456), None, datetime(2024, 2, 29), datetime(2026, 10, 29)])
+        self.assertEqual(result['documento_data_emissao'].to_pylist(), validity)
+        self.assertEqual(result['competencia_data'].to_pylist(), [date(2026, 10, 30)] * len(validity))
+        self.assertEqual(result['analise_data_analise'].to_pylist(), [datetime(2026, 10, 30, 9)] * len(validity))
+        self.assertEqual(frame['documento_data_validade'][0].to_pydatetime(), validity[0])
 
     def test_actual_exporters_write_shifted_parquet_without_database(self):
         fields = {

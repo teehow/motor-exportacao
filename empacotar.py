@@ -10,7 +10,7 @@ import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 MOTOR_FILES = (
     'executar_migracao.py', 'exportar_operadores.py', 'exportar_contratos.py',
     'exportar_colaboradores.py', 'exportar_analises.py', 'exportar_procedimentos.py',

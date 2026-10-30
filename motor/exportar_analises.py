@@ -730,6 +730,8 @@ def normalize_batch(df: pd.DataFrame) -> pd.DataFrame:
                 invalid_count,
             )
 
+    df["documento_data_validade"] = df["documento_data_validade"] - pd.Timedelta(days=1)
+
     for col in INTEGER_COLS:
         df[col] = pd.to_numeric(df[col], errors="coerce").astype("Int64")
 

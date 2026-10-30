@@ -1,4 +1,4 @@
-# Migracao Bex - pacote Windows 1.0.1
+# Migracao Bex - pacote Windows 1.0.2
 
 ## Primeiro uso em outro computador
 
@@ -51,6 +51,8 @@ O CSV de troca de contratos usa `project_id;contrato_numero;project.name;contrat
 ## Execucao e relatorios
 
 Os exportadores subtraem exatamente 3 horas dos campos de data e hora ao gravar o Parquet. O ajuste nao depende do fuso horario do computador e nao e repetido na importacao. Preserva valores nulos, precisao e schema. Campos somente de data (competencia, nascimento, admissao, vigencia, turma, emissao e validade, entre outros) nao sofrem deslocamento, mesmo quando o schema legado usa timestamp. Horarios sem data tambem nao sao alterados.
+
+Excecao especifica das analises: `documento_data_validade` preenchido recebe menos 1 dia, preservando o horario original. Valores nulos continuam nulos, inclusive no caso de pendencias `NOT_APPLICABLE`. Esse campo nao recebe tambem o desconto de 3 horas.
 
 O painel permite execucao completa, exportacao ou importacao, com selecao de grupos. Cada execucao tem uma pasta propria e gera relatorios HTML e JSON. Contagens parciais sao indicadas com `~`; a contagem final de exportacao vem dos metadados do Parquet.
 
