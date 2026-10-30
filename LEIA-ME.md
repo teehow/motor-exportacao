@@ -1,4 +1,4 @@
-# Migracao Bex - pacote Windows 1.0.0
+# Migracao Bex - pacote Windows 1.0.1
 
 ## Primeiro uso em outro computador
 
@@ -49,6 +49,8 @@ Use os arquivos corretos do cliente; consulte `dados/LEIA-ME.md`. Filtros opcion
 O CSV de troca de contratos usa `project_id;contrato_numero;project.name;contratada`, com a quarta coluna opcional. O CSV de operadores usa `project_company_account.id`, sem exigir PCA.deleted=false para os IDs selecionados. Os demais filtros existentes foram mantidos.
 
 ## Execucao e relatorios
+
+Os exportadores subtraem exatamente 3 horas dos campos de data e hora ao gravar o Parquet. O ajuste nao depende do fuso horario do computador e nao e repetido na importacao. Preserva valores nulos, precisao e schema. Campos somente de data (competencia, nascimento, admissao, vigencia, turma, emissao e validade, entre outros) nao sofrem deslocamento, mesmo quando o schema legado usa timestamp. Horarios sem data tambem nao sao alterados.
 
 O painel permite execucao completa, exportacao ou importacao, com selecao de grupos. Cada execucao tem uma pasta propria e gera relatorios HTML e JSON. Contagens parciais sao indicadas com `~`; a contagem final de exportacao vem dos metadados do Parquet.
 

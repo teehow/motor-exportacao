@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 from migracao_contrato_mapping import apply_contrato_mapping
+from migracao_export_dates import adjust_export_datetimes
 from migracao_html_text import strip_html_text
 from migracao_project_filter import CONTRATADAS_CTE, parse_project_args
 import logging
@@ -707,6 +708,7 @@ def export_to_parquet(args: argparse.Namespace, out_path: Path) -> None:
                     df = apply_contrato_mapping(df, args)
                     df = normalize_batch(df)
                     table = pa.Table.from_pandas(df, schema=schema, preserve_index=False)
+                    table = adjust_export_datetimes(table)
                     writer.write_table(table)
 
                     total_rows += len(df)

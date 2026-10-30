@@ -460,6 +460,7 @@ def parse_args() -> argparse.Namespace:
 def validate_inputs(script_dir: Path, data_dir: Path) -> None:
     required_scripts = [
         "migracao_contrato_mapping.py",
+        "migracao_export_dates.py",
         "migracao_logging.py",
         "migracao_criticas_report.py",
         "migracao_sql_export.py",

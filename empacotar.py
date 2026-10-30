@@ -10,13 +10,13 @@ import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 MOTOR_FILES = (
     'executar_migracao.py', 'exportar_operadores.py', 'exportar_contratos.py',
     'exportar_colaboradores.py', 'exportar_analises.py', 'exportar_procedimentos.py',
     'exportar_riscos.py', 'exportar_blacklist.py', 'exportar_integracoes.py',
     'exportar_operadores_vinculos.py', 'importar_validar.py',
-    'migracao_contrato_mapping.py', 'migracao_criticas_report.py', 'migracao_html_text.py',
+    'migracao_contrato_mapping.py', 'migracao_export_dates.py', 'migracao_criticas_report.py', 'migracao_html_text.py',
     'migracao_logging.py', 'migracao_project_filter.py', 'migracao_sql_export.py',
 )
 FILES = (

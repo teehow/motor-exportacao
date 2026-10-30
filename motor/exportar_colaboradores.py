@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 from migracao_contrato_mapping import apply_contrato_mapping
+from migracao_export_dates import adjust_export_datetimes
 from migracao_project_filter import parse_project_args
 import logging
 import os
@@ -732,6 +733,7 @@ def export_to_parquet(args: argparse.Namespace, out_path: Path) -> None:
                     table = pa.Table.from_pandas(
                         chunk, schema=PARQUET_SCHEMA, preserve_index=False, safe=True,
                     ).replace_schema_metadata(None)
+                    table = adjust_export_datetimes(table)
                     after_arrow = perf_counter()
                     parquet_writer.write_table(table)
                     finished = perf_counter()

@@ -26,6 +26,8 @@ O pacote usa Python 3.12 ou superior, 64 bits, com Tkinter. `Instalar.cmd` cria 
 
 A configuracao fica bloqueada enquanto uma execucao esta ativa. A tabela mostra inicio, duracao, status e registros de cada etapa. A contagem precedida de `~` e parcial; a quantidade final de exportacao e lida dos metadados do Parquet. Na importacao, a quantidade corresponde as insercoes informadas nos logs, antes das deduplicacoes pos-importacao do motor.
 
+Os nove exportadores aplicam uma subtracao fixa de 3 horas aos campos de data e hora antes da escrita. Campos somente de data, valores nulos e horarios sem data sao preservados. Nao ha ajuste adicional na importacao.
+
 Cada exportacao usa uma pasta nova em `output/execucoes/DATA_HORA/company_ID`. Nao sobrescreve Parquets de execucoes anteriores. Para somente importar, selecione a pasta que contem os Parquets; para varias empresas, selecione a pasta-pai das pastas `company_ID`.
 
 A limpeza e desmarcada por padrao. Quando desmarcada, o CNPJ nao e passado ao importador, pois o motor interpreta o CNPJ como solicitacao de limpeza. O CNPJ continua disponivel para a procedure de criticas. Quando marcada, a limpeza exige confirmacao, segue as regras atuais do motor e ocorre apenas para a primeira empresa da lista, como no executor original.

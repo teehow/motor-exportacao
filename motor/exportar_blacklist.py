@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 from migracao_contrato_mapping import apply_contrato_mapping
+from migracao_export_dates import adjust_export_datetimes
 from migracao_sql_export import iter_sql_chunks
 from migracao_project_filter import CONTRATADAS_CTE, parse_project_args
 import logging
@@ -117,6 +118,7 @@ def export_to_parquet(args: argparse.Namespace, out_path: Path):
 
         chunk = apply_contrato_mapping(chunk, args)
         table = pa.Table.from_pandas(chunk)
+        table = adjust_export_datetimes(table)
 
         if parquet_writer is None:
             parquet_writer = pq.ParquetWriter(out_path, table.schema, compression="snappy")

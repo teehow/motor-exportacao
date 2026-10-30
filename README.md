@@ -19,6 +19,7 @@ Consulte [LEIA-ME.md](LEIA-ME.md) para instalacao, seguranca e uso; [dados/LEIA-
 
 - `motor/exportar_*.py`: nove grupos de exportacao, com consultas e regras de negocio.
 - `motor/importar_validar.py`: importacao, validacao e deduplicacao no SQL Server.
+- `motor/migracao_export_dates.py`: subtracao de 3 horas dos campos de data/hora na gravacao do Parquet, preservando campos somente de data.
 - `motor/executar_migracao.py`: executor completo via terminal.
 - `painel_migracao/`: interface, acompanhamento e relatorios.
 - `painel_migracao/tests/`: testes de comandos, execucao, interface e distribuicao.

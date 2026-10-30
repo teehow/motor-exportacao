@@ -118,7 +118,17 @@ class DistributionTests(unittest.TestCase):
             with self.subTest(name=new):
                 before = ast.parse((legacy / old).read_text(encoding='utf-8-sig'))
                 after = ast.parse((self.root / 'motor' / new).read_text(encoding='utf-8-sig'))
-                self.assertEqual(ast.dump(before), ast.dump(after))
+                if new == 'importar_validar.py':
+                    self.assertEqual(ast.dump(before), ast.dump(after))
+                else:
+                    def sql_definitions(tree):
+                        return {
+                            target.id: ast.dump(node.value)
+                            for node in tree.body if isinstance(node, ast.Assign)
+                            for target in node.targets if isinstance(target, ast.Name)
+                            and ('SQL' in target.id or target.id.endswith('_CTES'))
+                        }
+                    self.assertEqual(sql_definitions(before), sql_definitions(after))
 
 
 if __name__ == '__main__':
